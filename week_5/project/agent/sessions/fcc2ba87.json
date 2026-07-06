@@ -1,0 +1,84 @@
+{
+  "id": "fcc2ba87",
+  "title": "Untitled",
+  "created_at": "2026-07-05T11:52:15.398940+00:00",
+  "updated_at": "2026-07-05T11:52:15.398940+00:00",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are Code Scout, an autonomous, extensible software engineering platform.\n\n# Code Scout Rules of Engagement\n\n## 1. Planning First\n- Always start a complex task by calling `add_todos` to create a plan.\n- Every task must have a concrete `verification_method` (e.g., \"Run `pytest path/to/test.py` and get exit code 0\").\n\n## 2. Search Before Reading\n- Do NOT read whole files immediately.\n- Use `grep` or `list_definitions` to find where functions/classes live, then use `read_file` to read the exact lines.\n\n## 3. Strict Verification\n- You cannot mark a task \"completed\" without evidence. \n- Propose your fix using `edit_file` or `write_file`.\n- Run the test suite via `run_command` to prove the fix works.\n- Pass the exit code/stdout to the `evidence` parameter in `mark_todo`.\n\n## 4. Citations\n- Cite `file:line` when explaining where a bug was found.\n- State the verifying exit code in your final answer.\n\n## Available Skills (Progressive Disclosure)\nYou have access to specialized runbooks. When a user request matches a description below, call `load_skill` with the skill name BEFORE attempting the task:\n- **commit**: Stage verified code changes and generate a clean conventional-commit message. Use when the user asks to commit, save work, or wrap up a task.\n"
+    },
+    {
+      "role": "user",
+      "content": "Use the commit skill to stage and commit our latest changes."
+    },
+    {
+      "content": null,
+      "refusal": null,
+      "role": "assistant",
+      "annotations": null,
+      "audio": null,
+      "function_call": null,
+      "tool_calls": [
+        {
+          "id": "call-0939e5da-db7f-459f-9272-9bba7e0dcd83",
+          "function": {
+            "arguments": "{\"name\":\"commit\"}",
+            "name": "load_skill"
+          },
+          "type": "function",
+          "index": 0
+        }
+      ],
+      "reasoning": "I need to load the commit skill first, then use it to stage and commit changes. Let me start by loading the skill",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "text": "I need to load the commit skill first, then use it to stage and commit changes. Let me start by loading the skill",
+          "format": "unknown",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call-0939e5da-db7f-459f-9272-9bba7e0dcd83",
+      "name": "load_skill",
+      "content": "{\"content\": \"# Loaded Skill: commit\\n\\n## Instructions\\n# Commit Workflow Runbook\\n\\nYou are executing the standardized git commit procedure. Follow these strict steps sequentially:\\n\\n1. **Verify Test Suite:** Run `run_command` with `python -m pytest` (or the target repo's test command). If any tests fail, **STOP IMMEDIATELY**. Report the failures to the user. Do not commit broken code.\\n2. **Inspect Changes:** Run `run_command` with `git status -s` and `git diff --staged` to inspect what is actually being modified.\\n3. **Stage Specific Files:** Ask the user for confirmation before staging, or stage specific target files using `run_command` with `git add <filepath>`. Do NOT run `git add -A` blindly without user consent.\\n4. **Draft Conventional Commit:** Write a commit message following the specification: `type(scope): summary`.\\n   - **Types:** `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`.\\n   - Keep the summary line in the imperative mood and under 72 characters.\\n5. **Request Verification & Commit:** Present the staged file list and the proposed commit message to the user. Once they type `y` or approve, execute `run_command` with `git commit -m \\\"<message>\\\"`.\"}"
+    },
+    {
+      "content": null,
+      "refusal": null,
+      "role": "assistant",
+      "annotations": null,
+      "audio": null,
+      "function_call": null,
+      "tool_calls": [
+        {
+          "id": "call-40254f80-ee68-4db6-b37c-9ad30731d649",
+          "function": {
+            "arguments": "{\"command\":\"python -m pytest\"}",
+            "name": "run_command"
+          },
+          "type": "function",
+          "index": 0
+        }
+      ],
+      "reasoning": "Now I need to follow the commit workflow. First, verify test suite with python -m pytest. Let's do that.\n",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "text": "Now I need to follow the commit workflow. First, verify test suite with python -m pytest. Let's do that.\n",
+          "format": "unknown",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call-40254f80-ee68-4db6-b37c-9ad30731d649",
+      "name": "run_command",
+      "content": "{\"error\": \"Command timed out after 10 seconds\"}"
+    }
+  ]
+}
